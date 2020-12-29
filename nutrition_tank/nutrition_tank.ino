@@ -1,17 +1,25 @@
 #include <Arduino.h>
 
+// PH sensors vars
 int PhSense = A0;
 int TempSense = A1;
-int samples = 10;
+
+// paristaltic pump vars
+int pump1_pin = 6;
+int pump2_pin = 3;
+
 
 float adc_resolution = 1024.0;
 
 void setup()
 {
   Serial.begin(9600);
-//  adc_resolution(8);
-  delay(100);
-  Serial.println("read PH-4502C");
+  // Serial.println("read PH-4502C");
+
+  Serial.println("write PWM to pumps");
+  pinMode(pump1_pin, OUTPUT);
+  pinMode(pump2_pin, OUTPUT);
+
 }
 
 float ph_val (float Ph_Voltage) 
@@ -22,7 +30,12 @@ float ph_val (float Ph_Voltage)
 void loop () 
 {
 
+// controlling parastaltic pumps
+  analogWrite(pump1_pin, 0);
+  analogWrite(pump2_pin, 0);
 
+/* 
+// reading PH meter
 // variables holding PH-4502c readings
 int measuring_Ph = 0;
 int measuring_Temp = 0;
@@ -44,21 +57,10 @@ float temp_C = V_temp*80;
  
 Serial.print(temp_C);
 Serial.print(" C\n");
+*/
+
+
 
 delay(1000);
 
-
-
-  /*
-  int measurings=0;
-  for (int i = 0; i < samples; i++)
-  {
-    measurings += analogRead(pHSense);
-    delay(10);
-  }
-  float voltage = 5 / adc_resolution * measurings/samples;
-  Serial.print("pH= ");
-  Serial.println(ph(voltage));
-  delay(3000);
-  */
 }
